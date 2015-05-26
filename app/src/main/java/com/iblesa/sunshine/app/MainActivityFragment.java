@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +24,7 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View inflate = inflater.inflate(R.layout.fragment_main, container, false);
+        final View view = inflater.inflate(R.layout.fragment_main, container, false);
         String[] forecastArray = {"Monday - Sunny - 25/13"
                 ,"Tuesday - Sunny - 25/13"
                 ,"Wednesday - Sunny - 25/13"
@@ -34,6 +36,16 @@ public class MainActivityFragment extends Fragment {
 
         List<String> weekForecast = new ArrayList<>(Arrays.asList(forecastArray));
 
-        return inflate;
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                // Current context
+                getActivity(),
+                // layout
+                R.layout.list_item_forecast,
+                // textview to populate
+                R.id.list_item_forecast_textview,
+                weekForecast);
+        ListView listView = (ListView) view.findViewById(R.id.listview_forecast);
+        listView.setAdapter(arrayAdapter);
+        return view;
     }
 }
